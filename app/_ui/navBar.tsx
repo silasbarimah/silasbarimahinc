@@ -62,7 +62,7 @@ export default function NavBar() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full">
+    <header className="sticky top-0 z-50 w-full ">
       <div className="mx-auto max-w-7xl px-3 pt-3 pb-2 sm:px-4 lg:px-6">
         <nav
           ref={navRef}
@@ -83,7 +83,7 @@ export default function NavBar() {
                   key={item.href}
                   href={item.href}
                   className={`rounded-full px-3 py-2 text-sm font-medium transition ${
-                    isActive ? "bg-black text-white" : "text-gray-700 hover:bg-slate-100"
+                    isActive ? "font-bold" : "text-gray-700 hover:bg-slate-100"
                   }`}
                 >
                   {item.label}
@@ -137,9 +137,9 @@ export default function NavBar() {
         </div>
 
         {isSearchOpen ? (
-          <div className="fixed inset-0 z-[90] flex min-h-screen w-full items-start justify-center overflow-hidden bg-white/10 px-4 pt-20 backdrop-blur-3xl">
+          <div className="fixed inset-0 z-[90] flex min-h-screen w-full items-start justify-center overflow-hidden bg-white/80 px-4 pt-20 backdrop-blur-3xl">
             <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-3xl" aria-hidden="true" />
-            <div className="relative w-full max-w-2xl overflow-hidden rounded-[1.75rem] border border-white/30 bg-white/20 p-4 shadow-[0_20px_80px_rgba(15,23,42,0.24)] backdrop-saturate-150 backdrop-blur-xl">
+            <div className="relative w-full max-w-2xl overflow-hidden rounded-[1.75rem] border border-white/30 bg-white/70 p-4 shadow-[0_20px_80px_rgba(15,23,42,0.24)] backdrop-saturate-150 backdrop-blur-xl">
               <div className="mb-3 flex items-center justify-between">
                 <p className="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">Search</p>
                 <button

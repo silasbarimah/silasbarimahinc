@@ -11,7 +11,7 @@ export default function NavbarSearch({ value, onChange, onSubmit, loading = fals
   return (
     <form onSubmit={onSubmit} className="flex w-full justify-center">
       <div className="flex w-full max-w-2xl items-center">
-        <label className="flex flex-1 items-center rounded-l-full border border-r-0 border-white/70 bg-white/70 px-4 py-2.5 text-gray-500 shadow-[0_6px_20px_rgba(15,23,42,0.06)] backdrop-blur">
+        <label className="flex flex-1 items-center rounded-l-full border border-r-0 border-white/70 px-4 py-2.5 text-gray-500 shadow-[0_6px_20px_rgba(15,23,42,0.06)] backdrop-blur">
           <svg viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-current stroke-2" aria-hidden="true">
             <circle cx="11" cy="11" r="6" />
             <path d="m20 20-4.2-4.2" />

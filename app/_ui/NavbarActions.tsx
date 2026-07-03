@@ -180,7 +180,7 @@ export default function NavbarActions({
       </button>
 
       {menuOpen && isAuthenticated ? (
-        <div className="fixed right-0 top-0 z-50 flex h-screen w-80 max-w-[90vw] flex-col overflow-hidden rounded-l-[1.5rem] border border-white/50 bg-white/55 p-2 shadow-[0_20px_60px_rgba(15,23,42,0.18)] backdrop-blur-2xl">
+        <div className="fixed right-0 top-0 z-50 flex h-screen w-80 flex-col overflow-hidden rounded-[1.5rem] border border-white/50 bg-white p-2 shadow-[0_20px_60px_rgba(15,23,42,0.18)]">
           <div className="flex items-center gap-3 rounded-[1rem] border border-white/70 bg-white/70 p-3 shadow-[0_8px_24px_rgba(15,23,42,0.06)]">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-sky-500 to-purple-600 text-base font-semibold text-white">
               {userName.charAt(0).toUpperCase()}
@@ -191,7 +191,7 @@ export default function NavbarActions({
             </div>
           </div>
 
-          <div className="mt-3 flex-1 overflow-y-auto pr-1">
+          <div className="flex-1 overflow-y-auto">
             <MenuSectionList
               sections={sections}
               onItemClick={(item) => {

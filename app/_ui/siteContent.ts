@@ -3,6 +3,7 @@ export const siteNavItems = [
   { label: "Explore", href: "/explore" },
   { label: "Shorts", href: "/shorts" },
   { label: "Library", href: "/library" },
+  { label: "About", href: "/about" },
 ];
 
 export const companyApps = [
@@ -63,10 +64,10 @@ export const footerSections = [
 ];
 
 export const socialLinks = [
-  { label: "GitHub", href: "https://github.com", icon: "GH" },
-  { label: "YouTube", href: "https://youtube.com", icon: "▶" },
-  { label: "TikTok", href: "https://tiktok.com", icon: "♪" },
-  { label: "Instagram", href: "https://instagram.com", icon: "◌" },
-  { label: "Facebook", href: "https://facebook.com", icon: "f" },
-  { label: "X", href: "https://x.com", icon: "✕" },
+  { label: "GitHub", href: "https://github.com/silasbarimah", icon: "GH" },
+  { label: "YouTube", href: "https://youtube.com/@silasbarimah", icon: "▶" },
+  { label: "TikTok", href: "https://tiktok.com/@silasbarimah", icon: "♪" },
+  { label: "Instagram", href: "https://instagram.com/silas_barimah", icon: "◌" },
+  { label: "Facebook", href: "https://facebook.com/silasbarimahinc", icon: "f" },
+  // { label: "X", href: "https://x.com", icon: "✕" },
 ];
