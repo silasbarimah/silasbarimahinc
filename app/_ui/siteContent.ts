@@ -1,5 +1,6 @@
 export const siteNavItems = [
   { label: "Home", href: "/" },
+  { label: "Artists", href: "/artists" },
   { label: "Explore", href: "/explore" },
   { label: "Shorts", href: "/shorts" },
   { label: "Library", href: "/library" },
@@ -10,24 +11,24 @@ export const companyApps = [
   {
     name: "Studio",
     description: "Create and publish polished work.",
-    href: "/",
+    href: "/upload",
     accent: "from-sky-500 to-cyan-500",
   },
   {
-    name: "Insights",
-    description: "Track performance and audience growth.",
-    href: "/explore",
+    name: "Artists",
+    description: "Discover artist profiles and full catalogues.",
+    href: "/artists",
     accent: "from-fuchsia-500 to-violet-500",
   },
   {
-    name: "Launch",
-    description: "Ship campaigns and product updates.",
-    href: "/shorts",
+    name: "Explore",
+    description: "Browse media, stories, and creative discovery.",
+    href: "/explore",
     accent: "from-emerald-500 to-lime-500",
   },
   {
-    name: "Connect",
-    description: "Manage conversations and communities.",
+    name: "Library",
+    description: "Keep your favorite content close at hand.",
     href: "/library",
     accent: "from-amber-500 to-orange-500",
   },
@@ -38,6 +39,7 @@ export const footerSections = [
     title: "Explore",
     links: [
       { label: "Home", href: "/" },
+      { label: "Artists", href: "/artists" },
       { label: "Explore", href: "/explore" },
       { label: "Shorts", href: "/shorts" },
       { label: "Library", href: "/library" },
@@ -55,10 +57,10 @@ export const footerSections = [
   {
     title: "Resources",
     links: [
-      { label: "Studio", href: "/" },
-      { label: "Insights", href: "/explore" },
-      { label: "Launch", href: "/shorts" },
-      { label: "Connect", href: "/library" },
+      { label: "Studio", href: "/upload" },
+      { label: "Artists", href: "/artists" },
+      { label: "Explore", href: "/explore" },
+      { label: "Library", href: "/library" },
     ],
   },
 ];

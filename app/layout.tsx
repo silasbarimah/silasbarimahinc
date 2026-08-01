@@ -4,6 +4,7 @@ import "./globals.css";
 import NavBar from "./_ui/navBar";
 import Footer from "./_ui/Footer";
 import { AuthProvider } from "./_ui/AuthProvider";
+import ThemeToggle from "./_ui/ThemeToggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,13 +29,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col bg-[var(--background)] text-[var(--foreground)] transition-colors duration-300">
         <AuthProvider>
           <NavBar />
           {children}
           <Footer />
+          <div className="fixed bottom-4 right-4 z-[100]">
+            <ThemeToggle />
+          </div>
         </AuthProvider>
       </body>
     </html>

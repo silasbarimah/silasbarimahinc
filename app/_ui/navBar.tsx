@@ -28,6 +28,17 @@ export default function NavBar() {
       return;
     }
 
+    void fetch("/api/analytics", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: user?.id ?? "guest",
+        type: "search",
+        page: "/search",
+        metadata: { query: trimmedQuery },
+      }),
+    }).catch(() => undefined);
+
     setMenuOpen(false);
     setIsSearchOpen(false);
     startTransition(() => router.push(`/search?q=${encodeURIComponent(trimmedQuery)}`));
@@ -66,7 +77,7 @@ export default function NavBar() {
       <div className="mx-auto max-w-7xl px-3 pt-3 pb-2 sm:px-4 lg:px-6">
         <nav
           ref={navRef}
-          className="flex flex-col rounded-[1.75rem] border border-white/50 bg-white/80 px-2.5 py-2 shadow-[0_18px_55px_rgba(15,23,42,0.12)] backdrop-blur-2xl sm:px-4 lg:px-6"
+          className="flex flex-col rounded-[1.75rem] border border-slate-200/80 bg-white/80 px-2.5 py-2 shadow-[0_18px_55px_rgba(15,23,42,0.12)] backdrop-blur-2xl dark:border-slate-700 dark:bg-slate-950/80 sm:px-4 lg:px-6"
         >
           <div className="flex flex-wrap items-center gap-2 sm:gap-3">
           <NavbarBrand
@@ -83,7 +94,7 @@ export default function NavBar() {
                   key={item.href}
                   href={item.href}
                   className={`rounded-full px-3 py-2 text-sm font-medium transition ${
-                    isActive ? "font-bold" : "text-gray-700 hover:bg-slate-100"
+                    isActive ? "font-bold text-slate-950 dark:text-white" : "text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
                   }`}
                 >
                   {item.label}
@@ -95,7 +106,7 @@ export default function NavBar() {
           <div className="flex flex-1 items-center justify-end gap-2">
             <button
               type="button"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/70 bg-white/70 text-slate-700 shadow-[0_6px_20px_rgba(15,23,42,0.06)] backdrop-blur"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white/80 text-slate-700 shadow-[0_6px_20px_rgba(15,23,42,0.06)] backdrop-blur dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-200"
               aria-label="Search"
               onClick={() => setIsSearchOpen(true)}
             >
@@ -137,9 +148,9 @@ export default function NavBar() {
         </div>
 
         {isSearchOpen ? (
-          <div className="fixed inset-0 z-[90] flex min-h-screen w-full items-start justify-center overflow-hidden bg-white/80 px-4 pt-20 backdrop-blur-3xl">
+          <div className="fixed inset-0 z-[90] flex min-h-screen w-full items-start justify-center overflow-hidden bg-white/80 px-4 pt-20 backdrop-blur-3xl dark:bg-slate-950/80">
             <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-3xl" aria-hidden="true" />
-            <div className="relative w-full max-w-2xl overflow-hidden rounded-[1.75rem] border border-white/30 bg-white/70 p-4 shadow-[0_20px_80px_rgba(15,23,42,0.24)] backdrop-saturate-150 backdrop-blur-xl">
+            <div className="relative w-full max-w-2xl overflow-hidden rounded-[1.75rem] border border-white/30 bg-white/70 p-4 shadow-[0_20px_80px_rgba(15,23,42,0.24)] backdrop-saturate-150 backdrop-blur-xl dark:border-slate-700 dark:bg-slate-900/80">
               <div className="mb-3 flex items-center justify-between">
                 <p className="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">Search</p>
                 <button

@@ -4,17 +4,14 @@ import { useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
 
 export default function AuthModal() {
-  const { isAuthModalOpen, authMode, closeAuthModal, login, signup } = useAuth();
-  const [mode, setMode] = useState(authMode);
+  const { isAuthModalOpen, authMode, closeAuthModal, login, signup, openAuthModal } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    setMode(authMode);
-  }, [authMode]);
+  const mode = authMode;
 
   if (!isAuthModalOpen) {
     return null;
@@ -80,12 +77,12 @@ export default function AuthModal() {
           {mode === "signup" ? (
             <>
               Already have an account?{" "}
-              <button type="button" className="font-semibold text-slate-900" onClick={() => setMode("signin")}>Sign in</button>
+              <button type="button" className="font-semibold text-slate-900" onClick={() => openAuthModal("signin")}>Sign in</button>
             </>
           ) : (
             <>
               New here?{" "}
-              <button type="button" className="font-semibold text-slate-900" onClick={() => setMode("signup")}>Create account</button>
+              <button type="button" className="font-semibold text-slate-900" onClick={() => openAuthModal("signup")}>Create account</button>
             </>
           )}
         </div>

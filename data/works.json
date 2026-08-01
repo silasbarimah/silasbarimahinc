@@ -1,0 +1,14 @@
+[
+  {
+    "id": "seed-creator-preview",
+    "creatorName": "Silas Barimah Inc.",
+    "title": "Creator Preview",
+    "category": "Visual",
+    "year": "2026",
+    "summary": "A live preview asset showing the new real-media publishing experience for creators.",
+    "mediaUrl": "/uploads/creator-preview.svg",
+    "mediaType": "image/svg+xml",
+    "mood": "Bold",
+    "createdAt": "2026-08-01T00:00:00.000Z"
+  }
+]

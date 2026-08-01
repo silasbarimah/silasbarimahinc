@@ -11,6 +11,10 @@ type AuthUser = {
   email: string;
   password: string;
   role: "member" | "admin";
+  location: string;
+  bio: string;
+  profilePhoto: string;
+  createdAt: string;
 };
 
 type AuthContextValue = {
@@ -21,32 +25,12 @@ type AuthContextValue = {
   isAuthModalOpen: boolean;
   login: (email: string, password: string) => Promise<void>;
   signup: (name: string, email: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
   openAuthModal: (mode?: AuthMode) => void;
   closeAuthModal: () => void;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
-
-const STORAGE_KEY = "silasbarimah.auth";
-
-function readStoredUser(): AuthUser | null {
-  if (typeof window === "undefined") {
-    return null;
-  }
-
-  const raw = window.localStorage.getItem(STORAGE_KEY);
-  if (!raw) {
-    return null;
-  }
-
-  try {
-    return JSON.parse(raw) as AuthUser;
-  } catch {
-    window.localStorage.removeItem(STORAGE_KEY);
-    return null;
-  }
-}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
@@ -55,31 +39,53 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   useEffect(() => {
-    const storedUser = readStoredUser();
-    setUser(storedUser);
-    setLoading(false);
+    const loadSession = async () => {
+      try {
+        const response = await fetch("/api/auth/session", {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (!response.ok) {
+          setUser(null);
+          return;
+        }
+
+        const nextUser = (await response.json().catch(() => null)) as AuthUser | null;
+        setUser(nextUser);
+      } catch {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    void loadSession();
   }, []);
 
   const login = async (email: string, password: string) => {
-    const storedUser = readStoredUser();
-
-    if (!storedUser) {
-      throw new Error("No account found. Please create one first.");
+    if (!email.trim() || password.length < 6) {
+      throw new Error("Please provide a valid email and a password with at least 6 characters.");
     }
 
-    if (storedUser.email !== email.trim().toLowerCase()) {
-      throw new Error("The email you entered does not match the stored account.");
+    const response = await fetch("/api/auth", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
+        email: email.trim().toLowerCase(),
+        password,
+      }),
+    });
+
+    const payload = (await response.json().catch(() => null)) as AuthUser | { error?: string } | null;
+
+    if (!response.ok) {
+      throw new Error(payload && "error" in payload ? payload.error : "Unable to sign in right now.");
     }
 
-    if (password.length < 6) {
-      throw new Error("Password must be at least 6 characters.");
-    }
-
-    if (storedUser.password !== password) {
-      throw new Error("The password you entered is incorrect.");
-    }
-
-    setUser(storedUser);
+    const nextUser = payload as AuthUser;
+    setUser(nextUser);
     setIsAuthModalOpen(false);
   };
 
@@ -88,27 +94,41 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       throw new Error("Please provide a valid name, email, and a password with at least 6 characters.");
     }
 
-    const nextUser: AuthUser = {
-      id: crypto.randomUUID(),
-      name: name.trim(),
-      email: email.trim().toLowerCase(),
-      password,
-      role: "member",
-    };
+    const response = await fetch("/api/auth", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
+        name: name.trim(),
+        email: email.trim().toLowerCase(),
+        password,
+        location: "Accra, Ghana",
+        bio: "Creative storyteller and audience-first maker.",
+        profilePhoto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
+        role: "member",
+      }),
+    });
 
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextUser));
+    const payload = (await response.json().catch(() => null)) as AuthUser | { error?: string } | null;
+
+    if (!response.ok) {
+      throw new Error(payload && "error" in payload ? payload.error : "Unable to create the account right now.");
     }
 
+    const nextUser = payload as AuthUser;
     setUser(nextUser);
     setIsAuthModalOpen(false);
   };
 
-  const logout = () => {
-    if (typeof window !== "undefined") {
-      window.localStorage.removeItem(STORAGE_KEY);
+  const logout = async () => {
+    try {
+      await fetch("/api/auth/session", {
+        method: "DELETE",
+        credentials: "include",
+      });
+    } finally {
+      setUser(null);
     }
-    setUser(null);
   };
 
   const openAuthModal = (mode: AuthMode = "signin") => {
